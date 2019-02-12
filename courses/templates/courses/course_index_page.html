@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+<h1>{{ page.title }}</h1>
+
+<div class="intro">{{ page.intro|richtext }}</div>
+
+<ul>
+    {% for course in coursepages %}
+    <li><a href="{% pageurl course %}">{{ course.specific.name }}</a></li>
+
+    <ol>
+        {% for student in course.students.all %}
+        <li>{{student}}</li>
+        {% endfor %}
+    </ol>
+
+    {% endfor %}
+</ul>
+
+{% endblock %}

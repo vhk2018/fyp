@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+<h1>Course List</h1>
+
+<ul>
+{% for course in courses %}
+<li><a href="{{course.get_absolute_url}}">{{ course.name }}</a></li>
+
+	<ol>
+	{% for student in course.students.all %}
+	<li>{{student}}</li>
+	{% endfor %}
+	</ol>
+	
+{% endfor %}
+</ul>

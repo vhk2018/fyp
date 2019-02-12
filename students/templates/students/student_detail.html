@@ -1,0 +1,14 @@
+<h1>Student Info</h1>
+
+<p>{{student}}</p>
+
+<ol>
+	{% for course,entries in scores %}
+	<li>{{course}}</li>
+	<ul>
+		{% for section, score in entries %}
+		<li>{{section}}: {{score}}</li>
+		{% endfor %}
+	</ul>
+	{% endfor %}
+</ol>
