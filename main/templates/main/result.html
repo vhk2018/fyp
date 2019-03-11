@@ -1,7 +1,134 @@
-{% extends 'main/base.html'%}
+{% extends 'base.html'%}
 
 {% block content %}
-<div class="w3-top">
+<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"-->
+
+<style>
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.mytooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  color:#B22222
+}
+
+.mytooltip .mytooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.mytooltip .mytooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.mytooltip:hover .mytooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+body {
+  background-color: #f9f9f9;
+  color: #425964;
+}
+
+h1 {
+  font-size: 28px;
+  font-family: "jaf-facitweb";
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 1em;
+}
+
+p {
+  font-family: "proxima nova", sans-serif;
+  font-size: 1.1em;
+  line-height: 1.4;
+}
+
+.sub-top {
+  margin-top: 2em;
+  width: 80%;
+  height: 200px;
+  background-color: #b7dde2;
+  border-radius: 16px 16px 0 0;
+}
+
+.sub-img {
+  width: 145px;
+  height: 141px;
+  margin-top: 0.7em;
+}
+
+.sub-bottom {
+  width: 80%;
+  
+  background-color: #fff;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0px 29px 39px -23px rgba(0,0,0,0.29);
+}
+
+.sub-text {
+  padding: 0.7em;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.mr-auto,
+.mx-auto {
+  margin-right: auto !important;
+}
+
+.mb-auto,
+.my-auto {
+  margin-bottom: auto !important;
+}
+
+.ml-auto,
+.mx-auto {
+  margin-left: auto !important;
+}
+</style>
+
+<!--div class="w3-top">
   <div class="w3-bar w3-red w3-card w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Home</a>
@@ -9,18 +136,60 @@
     <a href="/scoring" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-white">Scoring an Essay</a>
     <a href="/admin" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Define an Essay Question</a>
   </div>
-</div>
+</div-->
 
-<header class="w3-container w3-red w3-center" style="padding:64px 16px">
+<!--header class="w3-container w3-red w3-center" style="padding:64px 16px">
   <h1 class="w3-margin w3-jumbo">Automated Essays Scoring System</h1>
   <p class="w3-xlarge">Results(range from 0.0 to 3.0)</p>
 
-</header>
+</header-->
 
 <!-- <div class="card" style="padding: 64px 16px">
   {{result}}
 </div> -->
-  <p class="w3-xlarge" align="middle">Result: {{result}}</p>
 
-<a class="w3-button w3-black w3-padding-large w3-large w3-margin-top" href="/scoring">Score Another Essay</a>
+
+
+
+<div class="container-fluid">
+<div class="row">
+    <div class="sub-top text-center mx-auto">
+		<p class="w3-xlarge" align="middle">Result: {{result}} / 9.0</p>
+        <img src="https://s3.amazonaws.com/collateral.impactdata.com.au/tests/mailbox.png" class="sub-img mx-auto" alt="Mailbox">
+	</div>
+  </div>
+
+<div class="row">
+    <div class="sub-bottom mx-auto">
+      <div class="sub-text text-center">
+        <h1>Thank you</h1>
+        <div id='essay' style="letter-spacing: 2px"></div>
+<!--div>{{original}}</div-->
+
+		<a class="w3-button w3-black w3-padding-large w3-large w3-margin-top" href="/essay-scoring/scoring">Score Another Essay</a>
+      </div>
+    </div>
+</div>
+</div>
+<script>
+//alert(1);
+  //var ex = JSON.parse('{{grm| safe|escapejs}}');//[[3,4,'mean'],[11,3,'cdf']];
+  //alert(typeof(JSON.parse(ex)));
+  var a = document.getElementById('essay');
+  //var b = a.innerHTML.substr(3,4);
+  //alert(a.substr(3,4)); 
+  //a.classList.add("mystyle");
+  //var temp = '';
+  //var counter = 0;
+  
+  //for (var i = 0, len = ex.length; i < len; i = i + 1) {
+    //alert(counter);
+    //temp+= a.innerHTML.substring(counter,ex[i][0])+'<span class="mystyle" title="'+ex[i][2]+'">'+a.innerHTML.substring(ex[i][0],ex[i][0]+ex[i][1])+'</span>';
+    //counter = ex[i][0]+ex[i][1];
+  //}
+ //alert(temp);
+a.innerHTML = '{{essay|safe}}';
+//alert(a);
+//alert(1);
+</script>
 {% endblock %}

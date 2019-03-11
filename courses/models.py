@@ -16,6 +16,11 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
 from students.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.shortcuts import render, redirect
+import json
+from django.http import HttpResponse
 
 # Create your models here.
 class CourseIndexPage(Page):
@@ -28,6 +33,19 @@ class CourseIndexPage(Page):
 		coursepages = self.get_children().live().order_by('-first_published_at')
 		context['coursepages'] = coursepages
 		return context
+		
+    def serve(self, request):
+        if request.method=='POST':
+			data = request.POST.get('coursename')
+			print data
+			if data:
+				return HttpResponse(json.dumps({'message': 'added'}), content_type="application/json")
+			return JsonResponse({'message': 'failed'})#HttpResponse(json.dumps({'message': 'failed'}), content_type="application/json")
+        context = super(CourseIndexPage, self).get_context(request)
+        coursepages = self.get_children().live().order_by('-first_published_at')
+        context['coursepages'] = coursepages
+		#return context
+        return render(request, 'courses/course_index_page.html', context)
 		
 
 class Course(models.Model):
@@ -110,13 +128,27 @@ class CoursePage(Page):
 		
 	def __str__ (self):
 		return self.name
+	
+	def main_image(self):
+		gallery_item = self.gallery_images.first()
+		if gallery_item:
+			return gallery_item.image
+		else:
+			return None
 		
 	def get_context(self, request):
-        # Update context to include only published posts, ordered by reverse-chron
+        # Update context to include only published posts, ordered by reverse-chron = .order_by('-first_published_at')
 		context = super(CoursePage, self).get_context(request)
-		sections = self.get_children().live().order_by('-first_published_at')
+		sections = self.get_children().live().order_by('first_published_at')
 		context['sections'] = sections
+		units = []
+		#print sections
+		for s in sections:
+			units.append(s.specific.number)
+		units = list(set(units))
+		context['units']=units
 		return context
+
 	
 class CoursePageGalleryImage(Orderable):
     page = ParentalKey(CoursePage, related_name='gallery_images')
@@ -392,3 +424,45 @@ class UserAnswerPage(Page):
 	
 	class Meta:
 		unique_together = ('question', 'user',)
+		
+class Profile(models.Model):
+    ''' This defines the Profile model, which represents a user's profile.
+            user is the Django User model which has one-to-one relationship with the profile.
+            subjects defines the Subject models which have a many-to-many relationship with the profile and represents
+            the subjects taken by this user. Each relationship is extended by a Grade model.
+            interests defines the Interest models which have a many-to-many relationship with the profile and represents
+            the subject interest areas of the user.
+            targets defines the Course models which have a many-to-many relationship with the profile and represents
+            the target courses of the user. Each relationship is extended by a Target model.
+            l1r4_X is an integer defining the calculated L1R4 score of the user, where X is the L1R4 group and ranges from
+            A, B, C, to D. '''
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    course = models.ManyToManyField(CoursePage, through='Target')
+    
+    def __str__(self):
+        return self.user.username
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    ''' This function creates new Profile model instance each time a new User model instance is created and
+            links the two models together under a one-to-one relationship. '''
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    ''' This function saves the Profile model instance linked to the User model instance whenever the latter
+            is saved. '''
+    instance.profile.save()
+	
+class Target(models.Model):
+    ''' This defines the Target model, which represents the target course of a user. It is created for each
+            many-to-many relationship between a Profile model and Course Page model.
+            profile defines the foreign key to the Profile model.
+            course defines the foreign key to the Course Page model.
+            rank is an integer defining the rank selected by the user for this target course. '''
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    course = models.ForeignKey(CoursePage, on_delete=models.CASCADE)
+    #rank = models.IntegerField()         
+    def __str__ (self):
+		return self.profile.user.username + self.course.name

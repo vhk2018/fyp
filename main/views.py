@@ -12,6 +12,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+import json
 
 from .forms import *
 
@@ -33,7 +34,7 @@ def index(request):
 
 def home(request):
     if request.user.is_authenticated:
-        return render(request, 'main/homed.html')
+        return render(request, 'main/essay_index_page.html')
     else:
         return render(request, 'main/home.html')
 
@@ -87,12 +88,32 @@ def get_essay(request):
                 text_buffer = form.cleaned_data.get("essay_content").encode('utf-8')
                 question_buffer = form.cleaned_data.get("question")
                 result = model.calculate_score(text_buffer,question_buffer)
+                from grammarbot import GrammarBotClient
+                client = GrammarBotClient()
+                sentences = text_buffer.split('.')
+                content = ''
+                for sentence in sentences:
+					res = client.check(sentence)
+					grm = []
+					counter = 0
+					sentence = sentence.replace("'","\'")
+					#print res.matches
+					for each in res.matches:
+						grm.append([each.replacement_offset,each.replacement_length,each.message.replace('"','\"').replace("'",'\"'),each.category.replace('"','\"')]) 
+					if len(grm) == 0:
+						content+= sentence +'.'
+						continue
+					for i in range(len(grm)):
+  						content+= sentence[counter:grm[i][0]]+'<span class="mytooltip" style="color:white;background-color:#FB8C8C">'+sentence[grm[i][0]:grm[i][0]+grm[i][1]]+'<span class="mytooltiptext">'+grm[i][2].replace("'","\'")+'</span>'+'</span>'
+						counter = grm[i][0]+grm[i][1]
+					content+='.'
+                print content
                 if result >= 0:
                     Essays.objects.create(question = question_buffer, \
                     essay_content = text_buffer,\
                     predicted_score = result)
                     result = round(result,1)
-                    return render(request,'main/result.html', {'result': result})
+                    return render(request,'main/result.html', {'result': result,'essay':json.dumps(content),'grm':json.dumps(grm),'original':json.dumps(text_buffer)})
                 else:
                     result = 0
                     Essays.objects.create(question = question_buffer, \

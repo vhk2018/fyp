@@ -4,6 +4,21 @@ from __future__ import unicode_literals
 from django.db import models
 from datetime import datetime
 
+from django.core.urlresolvers import reverse
+from django.conf import settings
+
+from modelcluster.fields import ParentalKey
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from taggit.models import TaggedItemBase
+
+from wagtail.wagtailcore.models import Page, Orderable
+from wagtail.wagtailcore.fields import RichTextField
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailsearch import index
+
+from students.models import User
+
 # Create your models here.
 class Questions(models.Model):
     question_id = models.AutoField(primary_key=True)
@@ -28,3 +43,17 @@ class Essays(models.Model):
 
     class Meta:
         verbose_name_plural= "Essays"
+
+		# Create your models here.
+
+class EssayIndexPage(Page):
+    intro = RichTextField(blank=True)
+    
+    content_panels = Page.content_panels + [FieldPanel('intro', classname="full")]
+
+    #def get_context(self, request):
+		#context = super(CourseIndexPage, self).get_context(request)
+		#coursepages = self.get_children().live().order_by('-first_published_at')
+		#context['coursepages'] = coursepages
+		#return context
+		

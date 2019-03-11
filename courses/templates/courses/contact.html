@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block content %}
+<!-- Google Map API -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcj7IUmQauOqpqeL5xj-UZbLb03vhBV3s&amp;sensor=false"></script>
+
+
+    <div class="container">
+        <div class="contact-map" id="map"></div>
+        <div class="col-md-6 col-md-offset-6 col-sm-6 col-sm-offset-6 hidden-xs">
+            <div class="row">
+                <div class="inner-map">
+                    <div class="inner-map-content">
+                        <h1>Contact</h1>
+                        <hr>
+                        <p>Everything created in simple way</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container margin-top">
+        <div class="contact-wrapper">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="contact-info">
+                        <span class="icon-info">
+                        <i class="pe-7s-phone"></i>
+                    </span>
+                        <span class="title-info">CALL US:</span>
+                        <span class="description-info">+001 123 222</span>
+                    </div>
+
+                    <div class="contact-info">
+                        <span class="icon-info">
+                        <i class="pe-7s-map-marker"></i>
+                    </span>
+                        <span class="title-info">ADDRESS:</span>
+                        <span class="description-info">Street 23, CITY p.n 300 Canada</span>
+                    </div>
+
+                    <div class="contact-info">
+                        <span class="icon-info">
+                        <i class="pe-7s-mail"></i>
+                    </span>
+                        <span class="title-info">EMAIL:</span>
+                        <span class="description-info">info@gmail.com</span>
+                    </div>
+                </div>
+
+                <form method="GET">
+                    <div class="contact-form">
+
+                        <div class="col-md-4">
+                            <input type="text" placeholder="NAME *">
+                            <input type="text" placeholder="E-MAIL *">
+                            <input type="text" placeholder="SUBJECT">
+                        </div>
+                        <div class="col-md-5">
+                            <textarea placeholder="MESSAGE"></textarea>
+                            <input type="submit" value="SEND">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <a href="javascript:void(0)" class="scroll-top" id="scroll-top"><i class="pe-7s-angle-up"></i></a>
+
+    <script src="{% static 'js/vendor/jquery-1.11.2.min.js' %}"></script>
+    <script data-pace-options='{ "ajax": false }' src="{% static 'js/vendor/pace.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/vendor/classie.js' %}"></script>
+    <script src="{% static 'js/vendor/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.velocity.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.kenburnsy.min.js' %}"></script>
+    <script src="{% static 'js/vendor/textslide.js' %}"></script>
+    <script src="{% static 'js/vendor/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/vendor/tabs.js' %}"></script>
+    <script src="{% static 'js/ef-slider.js' %}"></script>    
+    <script src="{% static 'js/vendor/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.social-buttons.min.js' %}"></script>
+    <script src="{% static 'js/vendor/wow.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/ajax.js' %}"></script>
+	<script src="{% static 'js/map-costum.js' %}"></script>
+{% endblock %}

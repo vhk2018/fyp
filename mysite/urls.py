@@ -22,19 +22,23 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
 	#url(r'^essay/$',include('main.urls')),
-    url(r'^essay/',include('main.urls')),
+    url(r'^essay-scoring/',include('main.urls')),
     #url(r'^admin/', admin.site.urls),
 	
 	url(r'^', include('django.contrib.auth.urls', namespace='auth')),
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
+	
+	url(r'^signup/', signup, name='signup'),
+	url(r'^contact/', contact, name='contact'),
 
     url(r'^search/$', search_views.search, name='search'),
 	
 	url(r'^courses/$', course_list, name='course_list'),
 	url(r'^course_detail/(?P<course_id>\d+)/$', course_detail, name='course_detail'),
 	url(r'^course_add/$', course_add, name='course_add'),
+	url(r'^addcourse/$', addCourse, name='addCourse'),
 	
 	url(r'^section/(?P<section_id>\d+)/$', do_section, name='do_section'),
 	url(r'^section/(?P<section_id>\d+)/test/$', do_test, name='do_test'),

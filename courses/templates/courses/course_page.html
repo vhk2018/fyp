@@ -1,15 +1,419 @@
 {% extends "base.html" %}
-
+{% load staticfiles %}
 {% load wagtailcore_tags wagtailimages_tags %}
 
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.twitter.css' %}">
+
+<style>
+
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+		.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+		.fa-pencil,.fa-cogs {font-size:200px}
+		
+html,
+body{
+  height: 100%
+}
+
+#swl-header {
+  padding: 5px;
+  border-bottom: 3px solid #00B49D;
+  background: #59C3B7;
+  color: #FFF;
+}
+
+#swl-header .brand-icon {
+  display: block;
+  height: 50px;
+  width: 130px;
+  background: url('data:image/png;base64,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') left center no-repeat;
+  background-size: contain;
+}
+
+#swl-header * {
+  color: #FFF;
+  vertical-align: middle;
+}
+
+#swl-header .left a {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+#swl-header .header-menu {
+  padding: 0 5px;
+}
+
+#swl-header .header-menu:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.2)
+}
+
+#swl-header .header-menu li {
+  margin: 0 -2px;
+  padding: 0;
+}
+
+#swl-header .header-menu li a {
+  display: block;
+  color: #FFF;
+  padding: 10px 12px;
+}
+
+#swl-header .header-menu li a:hover,
+#swl-header .header-menu li a:focus {
+  background: rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+}
+
+#swl-body {
+  flex: 1 0 0;
+  background: #F2F2F2;
+}
+
+#swl-nav {
+  flex: 0 0 300px;
+  background: #3F4249;
+}
+#swl-nav * {
+  color: #FFF;
+}
+#swl-nav .course-overview {
+  background: #00B49D;
+  border: none;
+  border-radius: 0;
+  flex: 0 0 auto;
+}
+
+#swl-nav .course-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 0px;
+  margin: 0;
+}
+#swl-nav .course-list .course-unit > div {
+  padding: 0 15px;
+}
+#swl-nav .course-list > li:not(:last-child) {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+#swl-nav .course-list .unit-lessons {
+  position: relative;
+}
+#swl-nav .course-list .unit-lessons:after {
+    content: "";
+  display: block;
+  position: absolute;
+  top: 0px; left: 14px; bottom: 00px;
+  width: 4px;
+  background: rgba(255,255,255,0.1);
+  z-index: 1;
+}
+#swl-nav .course-list .unit-lessons li a {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 12px 8px 12px 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#swl-nav .course-list .unit-lessons li a:hover {
+  background: rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+#swl-nav .course-list li a:after {
+  content: "";
+  display: block; 
+  position :absolute;
+  top: 50%; left: 8px;
+  height: 20px; width: 20px;
+  margin-top: -8px;
+  font: normal normal normal 20px/1 FontAwesome;
+  z-index: 25;
+}
+#swl-nav .course-list .unit-lessons li a strong {
+  text-align: right;
+  flex: 0 0 70px
+}
+#swl-nav .course-list .unit-lessons li a span {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/*Status styles */
+#swl-nav .course-list .unit-lessons li[data-lesson-status="seen"] {background: rgba(255,255,255,0.1);}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="seen"] a * {color: #FFF}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="seen"] a:after {content: "\f111"; color: #59C3B7}
+
+#swl-nav .course-list .unit-lessons li[data-lesson-status="current"] {background: #FFF;}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="current"] a * {color: #3F4249}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="current"] a:after {content: "\f01d"; left: 5px; width: 30px; height: 30px; margin-top: -15px; font-size: 30px;color: #457CBF}
+
+#swl-nav .course-list .unit-lessons li[data-lesson-status="pending"] {background: ;}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="pending"] a * {color: rgba(255,255,255,0.4)}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="pending"] a:after {content: "\f111"; color: #565661}
+
+#swl-content {
+  flex: 1 0 0
+}
+
+
+/* Video Player */
+.video-player-container {
+  position:relative;
+  padding: 0 5px;
+  background: #333;
+  overflow: hidden;
+}
+.video-player-container video {
+ max-height: 400px;
+  max-height: 100%;
+  width:800px;
+  margin: 0 auto -5px;
+}
+.player-controls {
+  position: absolute;
+  left: 0; bottom: 0; right: 0;
+  width: 800px;
+  padding: 6px;
+  transform: translateY(100%) translateY(-5px);
+  transition:all .3s;
+  flex-wrap:wrap;
+  background:rgba(0,0,0,0.60);
+}
+
+.video-player-container:hover .player-controls {
+  transform: translateY(0);
+}
+
+.player-controls > * {
+  flex: 0;
+  margin: 0 4px;
+  color: #FFF;
+}
+.player-controls > div:not(.progress) {
+  flex: 0 1 120px;
+}
+
+.progress {
+  position: relative;
+  flex: 4;
+  height: 10px;
+  margin: 0 5px 0 10px;
+  transition:height 0.3s;
+  background:rgba(0,0,0,0.5);
+  cursor:ew-resize;
+}
+
+.progress-filled {
+  width:50%;
+  background:#00AEEF;
+  /*#ffc600;*/
+  flex:0;
+  /*flex-basis:0;*/
+}
+
+/* unholy css to style input type="range" */
+
+input[type=range] {
+  -webkit-appearance: none;
+  background:transparent;
+  width: 100%;
+  margin: 0 5px;
+  flex: 1
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
+  background: rgba(255,255,255,0.8);
+  border-radius: 1.3px;
+  border: 0.2px solid rgba(1, 1, 1, 0);
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(13, 13, 13, 0);
+  height: 15px;
+  width: 15px;
+  border-radius: 50px;
+  background: #00AEEF;
+  /*#ffc600;*/
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -3.5px;
+  box-shadow:0 0 2px rgba(0,0,0,0.2);
+}
+input[type=range]:focus::-wefbkit-slider-runnable-track {
+  background: #bada55;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
+  background: #ffffff;
+  border-radius: 1.3px;
+  border: 0.2px solid rgba(1, 1, 1, 0);
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(13, 13, 13, 0);
+  height: 15px;
+  width: 15px;
+  border-radius: 50px;
+  background: #E72923;
+  cursor: pointer;
+}
+
+
+.lesson-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 0px;
+}
+
+.lesson-card .list-group-flush a {
+  position: relative;
+  display: block;
+  padding-left: 30px;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lesson-card .list-group-flush a i {
+  position: absolute;
+  top: 50%; left: 7px;
+  margin-top: -7px;
+}
+.lesson-card .list-group-flush a:hover,
+.lesson-card .list-group-flush a:focus {
+  background: rgba(0,0,0,0.05);
+}
+
+
+@media screen and (min-width: 1200px) {
+  .video-player-container video {
+     max-height: 380px;
+  }
+}
+
+
+/* Comentarios */
+.lesson-comments .card-block > .comment,
+.lesson-comments .card-block > .comment * {
+  font-size: 14px;
+}
+
+.lesson-comments .card-block > .comment{
+  margin-top: 30px;
+  border-top: 2px dotted rgba(0,0,0,0.3);
+}
+
+.lesson-comments .card-block > .comment .comment.reply{
+  margin: 10px 0 10px -15px;
+  border-top: 2px dotted rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %}
+
 {% block content %}
+<div class="container">
+        <div class="single-portfolio-wrapper">
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <h1>{{ page.name }}</h1>
+                    <span class="info">{{ page.intro }}</span>
+                    <p>{{ page.body }}</p>
+                </div>
+                <div class="col-md-3 col-md-offset-1 col-sm-4">
+                    <div class="project-information">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Date:</td>
+                                    <td>01.09.2015</td>
+                                </tr>
+                                <tr>
+                                    <td>Client:</td>
+                                    <td>Envato</td>
+                                </tr>
+                                <tr>
+                                    <td>Category:</td>
+                                    <td>Fashion Design</td>
+                                </tr>
+                                <tr>
+                                    <td>Visit:</td>
+                                    <td><a href="http://www.envato.com" target="_blank">envato.com</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Share:</td>
+                                    <td>
+                                        <ul class="social-buttons">
+                                            <li><a href="javasript:void(0);" data-social="fb"><i class="iconmoon-facebook"></i></a></li>
+                                            <li>
+                                                <a href="javascript:void(0);" data-social="tw"> <i class="iconmoon-twitter"></i></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);" data-social="pt"><i class="iconmoon-pinterest"></i></a></li>
+                                            <li><a href="javascript:void(0);" data-social="ln"><i class="iconmoon-linkedin"></i></a></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="container" height ="1000px" style = 'margin:0px 20px 0 0px'>
+	<div id="main-wrapper" class="d-flex flex-column" style="margin-top:0px">
+	  <section id="swl-body" class="d-flex align-items-stretch">
+		<aside id="swl-nav" class="d-flex flex-column">
+	<ul class="list-unstyled course-list">
+		{#% for section in page.section_set.all %#}
+		{% for unit in units %}
+		<li class="course-unit">
+			<div class="my-3">
+				<h4>Unit {{unit}}</h4>
+				<span>Morbi ac lacus quis magna.</span>
+			</div>
+			<ul class="list-unstyled unit-lessons">
+			{% for section in sections %}
+			{% if section.specific.number == unit %}
+				<li data-lesson-status="seen">
+				  <!--button class="d-flex" data-src="{% pageurl section %}"-->
+				  <a class="d-flex" href="{% pageurl section %}" target="search_iframe">
+					<span>{{section}}</span>
+					<strong><i class="fa fa-fw fa-clock-o"></i> 84:59</strong>
+				  </a>
+				</li>
+			{#{section.specific.number}#}
+			{% endif %}
+			{% endfor %}
+			</ul>
+		</li>
+		{% endfor %}
+	</ul>
+	</aside>
+		<div id="swl-content" class="d-flex flex-column">
+		
+		  <iframe name="search_iframe" src="./lesson-1" height="600px" width="900"></iframe>
+		  
+	</section>
+	</div>  
+</div>
 
-<h1>Course Detail</h1>
+{% endblock %}
 
-<p>{{ page.name }}</p>
-<ul>
-	{% for section in page.section_set.all %}
-	<li><a href="{{section.get_absolute_url}}">{{section}}</a></li>
-	{% endfor %}
-</ul>
+{% block extra_js %}
+  {# Override this in templates to add extra javascript #}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>  
+  
+  
 {% endblock %}

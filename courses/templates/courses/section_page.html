@@ -1,0 +1,469 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/mysite.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+				
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.twitter.css' %}">
+
+
+<style>
+
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+		.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+		.fa-pencil,.fa-cogs {font-size:200px}
+		
+html,
+body{
+  height: 100%
+}
+
+#main-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#swl-header {
+  padding: 5px;
+  border-bottom: 3px solid #00B49D;
+  background: #59C3B7;
+  color: #FFF;
+}
+
+#swl-header .brand-icon {
+  display: block;
+  height: 50px;
+  width: 230px;
+  background: url('data:image/png;base64,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') left center no-repeat;
+  background-size: contain;
+}
+
+#swl-header * {
+  color: #FFF;
+  vertical-align: middle;
+}
+
+#swl-header .left a {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+#swl-header .header-menu {
+  padding: 0 5px;
+}
+
+#swl-header .header-menu:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.2)
+}
+
+#swl-header .header-menu li {
+  margin: 0 -2px;
+  padding: 0;
+}
+
+#swl-header .header-menu li a {
+  display: block;
+  color: #FFF;
+  padding: 10px 12px;
+}
+
+#swl-header .header-menu li a:hover,
+#swl-header .header-menu li a:focus {
+  background: rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+}
+
+#swl-body {
+  flex: 1 0 0;
+  background: #F2F2F2;
+}
+
+#swl-nav {
+  flex: 0 0 400px;
+  background: #3F4249;
+}
+#swl-nav * {
+  color: #FFF;
+}
+#swl-nav .course-overview {
+  background: #00B49D;
+  border: none;
+  border-radius: 0;
+  flex: 0 0 auto;
+}
+
+#swl-nav .course-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 0px;
+  margin: 0;
+}
+#swl-nav .course-list .course-unit > div {
+  padding: 0 15px;
+}
+#swl-nav .course-list > li:not(:last-child) {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+#swl-nav .course-list .unit-lessons {
+  position: relative;
+}
+#swl-nav .course-list .unit-lessons:after {
+    content: "";
+  display: block;
+  position: absolute;
+  top: 0px; left: 14px; bottom: 00px;
+  width: 4px;
+  background: rgba(255,255,255,0.1);
+  z-index: 1;
+}
+#swl-nav .course-list .unit-lessons li a {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 12px 8px 12px 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#swl-nav .course-list .unit-lessons li a:hover {
+  background: rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+#swl-nav .course-list li a:after {
+  content: "";
+  display: block; 
+  position :absolute;
+  top: 50%; left: 8px;
+  height: 20px; width: 20px;
+  margin-top: -8px;
+  font: normal normal normal 20px/1 FontAwesome;
+  z-index: 25;
+}
+#swl-nav .course-list .unit-lessons li a strong {
+  text-align: right;
+  flex: 0 0 70px
+}
+#swl-nav .course-list .unit-lessons li a span {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/*Status styles */
+#swl-nav .course-list .unit-lessons li[data-lesson-status="seen"] {background: rgba(255,255,255,0.1);}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="seen"] a * {color: #FFF}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="seen"] a:after {content: "\f111"; color: #59C3B7}
+
+#swl-nav .course-list .unit-lessons li[data-lesson-status="current"] {background: #FFF;}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="current"] a * {color: #3F4249}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="current"] a:after {content: "\f01d"; left: 5px; width: 30px; height: 30px; margin-top: -15px; font-size: 30px;color: #457CBF}
+
+#swl-nav .course-list .unit-lessons li[data-lesson-status="pending"] {background: ;}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="pending"] a * {color: rgba(255,255,255,0.4)}
+#swl-nav .course-list .unit-lessons li[data-lesson-status="pending"] a:after {content: "\f111"; color: #565661}
+
+#swl-content {
+  flex: 1 0 0
+}
+
+
+/* Video Player */
+.video-player-container {
+  position:relative;
+  padding: 0 5px;
+  background: #333;
+  overflow: hidden;
+}
+.video-player-container video {
+ max-height: 400px;
+  max-height: 100%;
+  width:800px;
+  margin: 0 auto -5px;
+}
+.player-controls {
+  position: absolute;
+  left: 0; bottom: 0; right: 0;
+  width: 900px;
+  padding: 6px;
+  transform: translateY(100%) translateY(-5px);
+  transition:all .3s;
+  flex-wrap:wrap;
+  background:rgba(0,0,0,0.60);
+}
+
+.video-player-container:hover .player-controls {
+  transform: translateY(0);
+}
+
+.player-controls > * {
+  flex: 0;
+  margin: 0 4px;
+  color: #FFF;
+}
+.player-controls > div:not(.progress) {
+  flex: 0 1 120px;
+}
+
+.progress {
+  position: relative;
+  flex: 4;
+  height: 10px;
+  margin: 0 5px 0 10px;
+  transition:height 0.3s;
+  background:rgba(0,0,0,0.5);
+  cursor:ew-resize;
+}
+
+.progress-filled {
+  width:50%;
+  background:#00AEEF;
+  /*#ffc600;*/
+  flex:0;
+  /*flex-basis:0;*/
+}
+
+/* unholy css to style input type="range" */
+
+input[type=range] {
+  -webkit-appearance: none;
+  background:transparent;
+  width: 100%;
+  margin: 0 5px;
+  flex: 1
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
+  background: rgba(255,255,255,0.8);
+  border-radius: 1.3px;
+  border: 0.2px solid rgba(1, 1, 1, 0);
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(13, 13, 13, 0);
+  height: 15px;
+  width: 15px;
+  border-radius: 50px;
+  background: #00AEEF;
+  /*#ffc600;*/
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -3.5px;
+  box-shadow:0 0 2px rgba(0,0,0,0.2);
+}
+input[type=range]:focus::-wefbkit-slider-runnable-track {
+  background: #bada55;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
+  background: #ffffff;
+  border-radius: 1.3px;
+  border: 0.2px solid rgba(1, 1, 1, 0);
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(13, 13, 13, 0);
+  height: 15px;
+  width: 15px;
+  border-radius: 50px;
+  background: #E72923;
+  cursor: pointer;
+}
+
+
+.lesson-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 0px;
+}
+
+.lesson-card .list-group-flush a {
+  position: relative;
+  display: block;
+  padding-left: 30px;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lesson-card .list-group-flush a i {
+  position: absolute;
+  top: 50%; left: 7px;
+  margin-top: -7px;
+}
+.lesson-card .list-group-flush a:hover,
+.lesson-card .list-group-flush a:focus {
+  background: rgba(0,0,0,0.05);
+}
+
+
+@media screen and (min-width: 1200px) {
+  .video-player-container video {
+     max-height: 280px;
+  }
+}
+
+
+/* Comentarios */
+.lesson-comments .card-block > .comment,
+.lesson-comments .card-block > .comment * {
+  font-size: 14px;
+}
+
+.lesson-comments .card-block > .comment{
+  margin-top: 30px;
+  border-top: 2px dotted rgba(0,0,0,0.3);
+}
+
+.lesson-comments .card-block > .comment .comment.reply{
+  margin: 10px 0 10px -15px;
+  border-top: 2px dotted rgba(0,0,0,0.1);
+}
+</style>
+
+
+<div class="video-player-container">
+        <video id="LessonVideo">
+          <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+        <div class="player-controls d-flex align-items-centerr">
+          <button class="btn btn-sm btn-outline-secondary player-button playPause" title="Toggle Play"><i class="fa fa-fw fa-play"></i></button>
+          <div class="progress d-flex"><div class="progress-filled"></div></div> 
+          <div class="d-flex">
+          <small><i class="fa fa-volume-up"></i></small>
+          <input type="range" name="volume" id ="volume" class="player-slider" min="0" max="1" step="0.05" value="1">
+          </div>
+          <div class="d-flex">
+            <small><i class="fa fa-fast-forward"></i></small>
+            <input type="range" name="playbackRate" id ="playbackRate" class="player-slider" min="1" max="3" step="0.5" value="1">
+             <small id="speedRateValue">x1</small>
+          </div>
+            <button class="btn btn-sm btn-outline-secondary player-button fs-button" id="fullscreenToggle" ><i class="fa fa-fw fa-expand"></i></button>  
+          <button class="btn btn-sm btn-outline-secondary player-button skip-button" id="skip-back" data-skip="-10"><i class="fa fa-fw fa-backward"></i> 10s.</button>
+          <button class="btn btn-sm btn-outline-secondary player-button skip-button" id="skip-ahead" data-skip="10">10s. <i class="fa fa-fw fa-forward"></i></button>
+        </div>
+      </div>
+	  <h1>{{ page.title }}</h1>
+	  <p>{{ page.name }}</p>
+	  <p>{{ page.text }}</p>
+  
+
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>  
+  
+			<script>
+  var myVid = document.querySelector("#LessonVideo");
+var playBtn = document.querySelector(".playPause");
+var allInputs = document.querySelectorAll("input");
+var playBar = document.querySelector(".progress-filled");
+var skipBtn = document.querySelectorAll(".skip-button");
+var fsBtn = document.querySelector(".fs-button");
+var speedInput = document.querySelector("#playbackRate")
+//var cineBtn = document.querySelector(".dimmer");
+//var overlay = document.querySelector(".video-player-container");
+
+$(".fs-button").click(function(){
+ console.log("click!");
+  
+  if (myVid.requestFullscreen) {
+    myVid.requestFullscreen();
+  } else if (myVid.mozRequestFullScreen) {
+    myVid.mozRequestFullScreen(); // Firefox
+  } else if (myVid.webkitRequestFullscreen) {
+    myVid.webkitRequestFullscreen(); // Chrome and Safari
+  }
+});
+
+speedInput.addEventListener("change", speedChange);
+
+function speedChange() {
+  var SpeedRate = this.value;
+  console.log("sp" + SpeedRate);
+  document.querySelector("#speedRateValue").innerHTML = "x" + SpeedRate;
+}
+
+////////////////////////////   EVENTS  /////////////////////////////////////
+
+//cineBtn.addEventListener("click", dimView);
+playBtn.addEventListener("click", togglePlay);
+myVid.addEventListener("click", togglePlay);
+myVid.addEventListener("timeupdate", atEnd);
+myVid.addEventListener("seeking", atEnd);
+//fsBtn.addEventListener("click", toggleFullScreen);
+
+// INPUT ELEMENT EVENTS
+allInputs.forEach(function (input) {
+  return input.addEventListener("change", controlla);
+});
+
+// SKIP BUTTON EVENTS
+skipBtn.forEach(function (btn) {
+  return btn.addEventListener("click", skipper);
+});
+
+////////////////////////////   FUNCTIONS  /////////////////////////////////////
+
+// FUNCTON THAT TAKES INPUT VALUE ON CHANGE AN APPLIES IT TO THE VIDEO ELEMENT
+function controlla() {
+  myVid[this.name] = this.value;
+  console.log(this.value);
+}
+
+// PROGRESS BAR FUNCTION
+function playFill() {
+  var filled = (myVid.currentTime / myVid.duration).toFixed(3) * 100;
+  playBar.style.flexBasis = filled + "%";
+}
+
+// TOGGLE FUNCTION FOR PLAY BUTTON
+function togglePlay() {
+  playBtn.classList.toggle("toggle");
+  console.log(myVid.duration);
+  var fillRun = undefined;
+  if (playBtn.classList.contains("toggle")) {
+    // IF PLAY BUTTON ALSO HAS A CLASS 'toggle'
+    myVid.play();
+    playBtn.innerHTML = "<i class='fa fa-fw fa-pause'></i>";
+    fillRun = setInterval(playFill, 100);
+  } else {
+    // ELSE IF THE PLAY BUTTON DOES NOT HAVE THE 'toggle' CLASS
+    myVid.pause();
+    playBtn.innerHTML = "<i class='fa fa-fw fa-play'></i>";
+    clearInterval(fillRun);
+  }
+}
+
+// SKIPPER FUNCTION
+function skipper() {
+  var playTime = parseInt(myVid.currentTime);
+  var skipVal = parseInt(this.dataset.skip);
+  console.log("Current: " + playTime);
+  console.log("Skip value: " + skipVal);
+  var newTime = playTime + skipVal;
+  myVid.currentTime = newTime;
+}
+
+// REPLAY BUTTON
+function atEnd() {
+  if (myVid.ended) {
+    console.log("Finsihed");
+    playBtn.innerHTML = "&#8635;";
+    playBtn.classList.remove("toggle");
+  }
+}
+
+//////////////////////////  FULLSCREEN STUFF  ///////////////////////////
+
+</script>

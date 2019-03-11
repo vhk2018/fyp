@@ -10,7 +10,7 @@ num_regex = re.compile('^[+-]?[0-9]+\.?[0-9]*$')
 ref_scores_dtype = 'int32'
 
 asap_ranges = {
-    0: (0, 3)
+    0: (0, 9)
 }
 
 def get_ref_dtype():

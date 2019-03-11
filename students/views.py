@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 
 from students.models import User
-from courses.models import Course
+from courses.models import Course, Target
 from courses.views import calculate_score
 
 # Create your views here.
@@ -22,7 +22,10 @@ def student_detail(request):
 	if not request.user.is_authenticated():
 		raise PermissionDenied
 	student = request.user
+	targets = Target.objects.filter(profile=request.user.profile)
+    #grades = Grade.objects.filter(profile=request.user.profile).order_by('subject__name')
 	return render(request, 'students/student_detail.html', {
 		'student': student,
 		'scores':get_all_scores_for_user(student),
+		'targets':targets
 	})

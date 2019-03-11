@@ -30,5 +30,6 @@ class Model:
             predictions = model.predict(
                 process_essay(essay, input_w_shape, input_c_shape),
                 batch_size=180).squeeze()
+            print 'scoreeeeeeeeeeeeeeeeeeeeeeeeee: '+ str(predictions)
             score = convert_to_dataset_friendly_scores(predictions)
             return score

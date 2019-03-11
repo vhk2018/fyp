@@ -192,4 +192,4 @@ EMAIL_HOST_USER = 'vo.hong.khanh.2011@vjc.sg' #'dicksonlee009@gmail.com'
 EMAIL_HOST_PASSWORD = 'FashionisTA1010' #'8016st08NTU'
 EMAIL_PORT = 587
 
-LOGIN_REDIRECT_URL = '/'
+#LOGIN_REDIRECT_URL = '/'
